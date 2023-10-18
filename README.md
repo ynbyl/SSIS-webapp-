@@ -7,6 +7,7 @@ A web-based application that simplifies the management of students, courses, and
 * Course Enrollment: Manage course database for each student, ensuring accurate and organized records of student courses.
 * College Information: 'Centralize' data about colleges, encompassing college codes, and college names, making it easier to keep track of the different institutions.
 
+
 ## Tutorial
 * Create venv
   > python -m venv *name
