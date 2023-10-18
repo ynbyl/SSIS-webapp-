@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html data-bs-theme="dark">
+
+<head>
+  <title>Create Student</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+</head>
+
+<body>
+  <div class="container mt-5" style="width:500px">
+    <h1 class="display-4">Create Student</h1>
+    <div class="container">
+      {% if message %}
+      <div class="alert alert-danger">
+        {{ message }}
+      </div>
+      {% endif %}
+    </div>
+    <form method="POST">
+      <div class="form-group">
+        <label for="id">ID:</label>
+        <input type="text" class="form-control" name="id" required>
+      </div>
+      <br>
+      <div class="form-group">
+        <label for="first_name">First Name:</label>
+        <input type="text" class="form-control" name="first_name" required>
+      </div>
+      <br>
+      <div class="form-group">
+        <label for="last_name">Last Name:</label>
+        <input type="text" class="form-control" name="last_name" required>
+      </div>
+      <br>
+      <div class="form-group">
+        <label for="year_level">Year Level:</label>
+        <input type="number" class="form-control" name="year_level" required>
+      </div>
+      <br>
+      <div class="form-group">
+        <label for="gender">Gender:</label>
+        <input type="text" class="form-control" name="gender" required>
+      </div>
+      <br>
+      <div class="form-group">
+        <label for="coursecode">Course:</label>
+        <select class="form-select" name="coursecode" required>
+          {% for course in courses %}
+          <option value="{{ course.coursecode }}">
+            {{ course.coursecode }}
+          </option>
+          {% endfor %}
+        </select>
+      </div>
+      <br>
+      <button type="submit" class="btn btn-primary">Create</button>
+      <button type="button" class="btn btn-secondary" onclick="window.location.href='/'">Cancel</button>
+    </form>
+  </div>
+</body>
+
+</html>

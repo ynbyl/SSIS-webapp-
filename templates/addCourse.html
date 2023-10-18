@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html data-bs-theme="dark">
+
+<head>
+  <title>Add Course</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+</head>
+
+<body>
+  <div class="container mt-5" style="width:500px">
+    <h1 class="display-4">Add Course</h1>
+    <form method="POST">
+      <div class="form-group">
+        <label for="coursecode">Course Code:</label>
+        <input type="text" class="form-control" name="coursecode" required>
+      </div>
+      <br>
+      <div class="form-group">
+        <label for="coursename">Course Name:</label>
+        <input type="text" class="form-control" name="coursename" required>
+      </div>
+      <br>
+      <div class="form-group">
+        <label for="collegecode">College:</label>
+        <select class="form-select" name="collegecode" required>
+          {% for college in colleges %}
+          <option value="{{ college.collegecode }}">
+            {{ college.collegename }}
+          </option>
+          {% endfor %}
+        </select>
+      </div>
+      <br>
+      <button type="submit" class="btn btn-primary">Create</button>
+      <button type="button" class="btn btn-secondary" onclick="window.location.href='/listCourses'">Cancel</button>
+    </form>
+  </div>
+</body>
+
+</html>
