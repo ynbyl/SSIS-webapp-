@@ -1,4 +1,4 @@
-# Student Management System
+# Student Information System
 A web-based application that simplifies the management of students, courses, and colleges. This platform offers a comprehensive set of features for educational institutions, making the task of handling student records, course enrollments, and college information more efficient.
 
 ## Key Features
