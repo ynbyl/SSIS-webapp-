@@ -66,7 +66,7 @@ def listColleges():
 
 @app.route('/addStudent', methods=['GET', 'POST'])
 def addStudent():
-    
+
     if request.method == 'POST':
         id = request.form.get('id')
         first_name = request.form.get('first_name')
@@ -74,22 +74,24 @@ def addStudent():
         year_level = request.form.get('year_level')
         gender = request.form.get('gender')
         coursecode = request.form.get('coursecode')
+
         conn = getdbconnect()
         cursor = conn.cursor()
-        values = (id, first_name, last_name, year_level, gender, coursecode)
 
-        cursor.execute("SELECT * FROM Students WHERE id=%s", id)
-        true=cursor.fetchall()
+        cursor.execute("SELECT id FROM Students WHERE id=%s", (id,))
+        existing_student = cursor.fetchone()
 
-        if true is None:
-            cursor.execute(
-                "INSERT INTO Students (id, first_name, last_name, year_level, gender, coursecode) VALUES (%s, %s, %s, %s, %s, %s)", values)
-            conn.commit()
+        if existing_student:
+            message = 'A student with the same ID already exists.'
             conn.close()
-        else:
-            message = 'Cannot delete College with courses attached.'
-            print("In delete", message)
-            return redirect(url_for('index', message=message))
+            return render_template('addStudent.html', message=message)
+
+        values = (id, first_name, last_name, year_level, gender, coursecode)
+        cursor.execute(
+            "INSERT INTO Students (id, first_name, last_name, year_level, gender, coursecode) VALUES (%s, %s, %s, %s, %s, %s)", values)
+        conn.commit()
+        conn.close()
+        return redirect(url_for('index'))
 
     conn = getdbconnect()
     cursor = conn.cursor()
