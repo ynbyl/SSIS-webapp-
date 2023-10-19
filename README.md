@@ -16,9 +16,10 @@ A web-based application that simplifies the management of students, courses, and
 * Flask
   > pip install flask
 * MySQL
-  > https://dev.mysql.com/downloads/mysql/
+  > https://dev.mysql.com/downloads/mysql/ |
   > pip install mysql-connector-python
 
 * Run database
 * Run app
+  > venv/scripts/activate |
   > flask run
