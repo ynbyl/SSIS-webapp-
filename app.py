@@ -59,10 +59,9 @@ def listColleges():
     colleges = [{'collegecode': row[0], 'collegename': row[1]}
                 for row in cursor.fetchall()]
     conn.close()
-    
+
     message = request.args.get('message')
     print (message)
-
     return render_template('listColleges.html', colleges=colleges, message=message)
 
 
@@ -101,7 +100,6 @@ def addStudent():
     courses = [{'coursecode': row[0], 'coursename': row[1]}
                for row in cursor.fetchall()]
     conn.close()
-
     return render_template('addStudent.html', courses=courses)
 
 
@@ -119,7 +117,7 @@ def addCourse():
         existing_course = cursor.fetchone()
 
         if existing_course:
-            message = 'A course with the same course code already exists.'
+            message = 'That course already exists.'
             conn.close()
             return render_template('addCourse.html', message=message)
 
@@ -136,7 +134,6 @@ def addCourse():
     colleges = [{'collegecode': row[0], 'collegename': row[1]}
                 for row in cursor.fetchall()]
     conn.close()
-
     return render_template('addCourse.html', colleges=colleges)
 
 
@@ -153,7 +150,7 @@ def addCollege():
         existing_college = cursor.fetchone()
 
         if existing_college:
-            message = 'A college with the same college code already exists.'
+            message = 'Your College already exists.'
             conn.close()
             return render_template('addCollege.html', message=message)
 
