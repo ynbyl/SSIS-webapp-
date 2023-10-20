@@ -292,5 +292,59 @@ def deleteCollege(collegecode):
     return redirect(url_for('listColleges'))
 
 
+@app.route('/search', methods=['GET'])
+def search():
+    query = request.args.get('query')  # Get the search query from the URL parameter
+
+    conn = getdbconnect()
+    cursor = conn.cursor()
+
+    # Perform a SQL query to search for colleges based on the query in collegecode and collegename columns
+    query = "%" + query.lower() + "%"  # Convert the query to lowercase for a case-insensitive search
+    cursor.execute("SELECT * FROM Colleges WHERE LOWER(collegecode) LIKE %s OR LOWER(collegename) LIKE %s", (query, query))
+    
+    search_results = [{'collegecode': row[0], 'collegename': row[1]} for row in cursor.fetchall()]
+
+    conn.close()
+
+    return render_template('searchCollege.html', search_results=search_results)
+
+
+@app.route('/search-courses', methods=['GET'])
+def search_courses():
+    query = request.args.get('query')  # Get the search query from the URL parameter
+
+    conn = getdbconnect()
+    cursor = conn.cursor()
+
+    # Perform a SQL query to search for courses based on the query in coursecode, coursename, and college columns
+    query = "%" + query.lower() + "%"  # Convert the query to lowercase for a case-insensitive search
+    cursor.execute("SELECT * FROM Courses WHERE LOWER(coursecode) LIKE %s OR LOWER(coursename) LIKE %s OR LOWER(collegecode) LIKE %s", (query, query, query))
+    
+    search_results = [{'coursecode': row[0], 'coursename': row[1], 'collegecode': row[2]} for row in cursor.fetchall()]
+
+    conn.close()
+
+    return render_template('searchCourses.html', search_results=search_results)
+
+
+@app.route('/search-students', methods=['GET'])
+def search_students():
+    query = request.args.get('query')  # Get the search query from the URL parameter
+
+    conn = getdbconnect()
+    cursor = conn.cursor()
+
+    # Perform a SQL query to search for students based on the query in id, first_name, last_name, and other columns
+    query = "%" + query.lower() + "%"  # Convert the query to lowercase for a case-insensitive search
+    cursor.execute("SELECT * FROM Students WHERE LOWER(id) LIKE %s OR LOWER(first_name) LIKE %s OR LOWER(last_name) LIKE %s OR CAST(year_level AS CHAR) LIKE %s OR LOWER(gender) LIKE %s OR LOWER(coursecode) LIKE %s", (query, query, query, query, query, query))
+    
+    search_results = [{'id': row[0], 'first_name': row[1], 'last_name': row[2], 'year_level': row[3], 'gender': row[4], 'coursecode': row[5]} for row in cursor.fetchall()]
+
+    conn.close()
+
+    return render_template('searchStudent.html', search_results=search_results)
+
+
 if __name__ == '__main__':
     app.run(debug=True)

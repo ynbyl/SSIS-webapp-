@@ -35,6 +35,15 @@
     <a class="btn btn-primary" href="{{ url_for('addCollege') }}">Add College</a>
   </div>
   <hr>
+  
+  <div class="container">
+    <form action="/search" method="GET" class="input-group mb-3">
+        <input type="text" class="form-control" name="query" placeholder="Search" aria-label="Search" aria-describedby="basic-addon2">
+        <div class="input-group-append">
+            <button class="btn btn-outline-secondary" type="submit">Search</button>
+        </div>
+    </form>
+</div>
 
   <table class="table">
     <thead>
