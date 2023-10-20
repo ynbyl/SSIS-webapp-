@@ -8,7 +8,14 @@
 
 <body>
   <div class="container mt-5" style="width:500px">
-    <h1 class="display-4">Add Course</h1>
+    <h1 class="display-4">Add a Course</h1>
+    <div class="container">
+      {% if message %}
+      <div class="alert alert-danger">
+        {{ message }}
+      </div>
+      {% endif %}
+    </div>
     <form method="POST">
       <div class="form-group">
         <label for="coursecode">Course Code:</label>

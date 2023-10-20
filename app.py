@@ -59,8 +59,10 @@ def listColleges():
     colleges = [{'collegecode': row[0], 'collegename': row[1]}
                 for row in cursor.fetchall()]
     conn.close()
+    
     message = request.args.get('message')
     print (message)
+
     return render_template('listColleges.html', colleges=colleges, message=message)
 
 
@@ -99,6 +101,7 @@ def addStudent():
     courses = [{'coursecode': row[0], 'coursename': row[1]}
                for row in cursor.fetchall()]
     conn.close()
+
     return render_template('addStudent.html', courses=courses)
 
 
@@ -108,8 +111,18 @@ def addCourse():
         coursecode = request.form.get('coursecode')
         coursename = request.form.get('coursename')
         collegecode = request.form.get('collegecode')
+
         conn = getdbconnect()
         cursor = conn.cursor()
+
+        cursor.execute("SELECT coursecode FROM Courses WHERE coursecode=%s", (coursecode,))
+        existing_course = cursor.fetchone()
+
+        if existing_course:
+            message = 'A course with the same course code already exists.'
+            conn.close()
+            return render_template('addCourse.html', message=message)
+
         values = (coursecode, coursename, collegecode)
         cursor.execute(
             "INSERT INTO Courses (coursecode, coursename, collegecode) VALUES (%s, %s, %s)", values)
@@ -132,8 +145,18 @@ def addCollege():
     if request.method == 'POST':
         collegecode = request.form.get('collegecode')
         collegename = request.form.get('collegename')
+
         conn = getdbconnect()
         cursor = conn.cursor()
+
+        cursor.execute("SELECT collegecode FROM Colleges WHERE collegecode=%s", (collegecode,))
+        existing_college = cursor.fetchone()
+
+        if existing_college:
+            message = 'A college with the same college code already exists.'
+            conn.close()
+            return render_template('addCollege.html', message=message)
+
         values = (collegecode, collegename)
         cursor.execute(
             "INSERT INTO Colleges (collegecode, collegename) VALUES (%s, %s)", values)
@@ -142,6 +165,7 @@ def addCollege():
         return redirect(url_for('listColleges'))
 
     return render_template('addCollege.html')
+
 
 
 @app.route('/updateStudent/<string:id>', methods=['GET', 'POST'])
